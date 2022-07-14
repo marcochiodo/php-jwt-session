@@ -8,7 +8,7 @@ class JWTSessionHandler implements \SessionHandlerInterface , \SessionIdInterfac
 
     private string $path;
     private array $payload = [];
-    private \DateTime $last_update;
+    private ?\DateTime $last_update = null;
 
     private string $private_key;
     private string $public_key;

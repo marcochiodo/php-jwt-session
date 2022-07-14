@@ -1,0 +1,28 @@
+version: "3.4"
+services:
+  app:
+    build:
+      context: .
+      args:
+        IMAGE: php:${PHP_VERSION-7.2}-cli
+    volumes:
+      - type: bind
+        source: .
+        target: /srv
+      - type: bind
+        source: ${COMPOSER_PHAR:?err}
+        target: /srv/composer.phar
+      - type: bind
+        source: ${PHPUNIT:?err}
+        target: /srv/tests/phpunit
+      - type: bind
+        source: ${COMPOSER_AUTH:?err}
+        target: /srv/auth.json
+        read_only: true
+    working_dir: /srv/tests
+    command: php -r 'while(true){echo"Watinig for exec command...\n";sleep(300);}'
+    user: developer
+  mongodb:
+    image: mongo:4.0
+    ports:
+      - "27017:27017"

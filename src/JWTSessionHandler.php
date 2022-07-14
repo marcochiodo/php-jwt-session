@@ -78,6 +78,7 @@ class JWTSessionHandler implements \SessionHandlerInterface , \SessionIdInterfac
 
         $ttl = (int) ini_get('session.gc_maxlifetime');
         $this->payload['exp'] = time() + $ttl;
+        $this->payload['iss'] = $this->path;
 
         return JWT::encode($this->payload, $this->private_key, $this->algorithm);
     }
